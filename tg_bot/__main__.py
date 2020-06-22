@@ -17,26 +17,23 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-Hi {}, my name is {}! 
-// I am an Anime themed group management bot with a lot of Special Features.
-You can find the list of available commands with /help.
+Hi {}, My Name is {}! 
+// I'm A Group Management Bot With A Lot Of Special Features.
+You Can Find The List Of Available Commands With /Help. Made With Love In 🇲🇦
 ==========================
--> [Lynda's Repo](https://waa.ai/Lynda)
--> Report [Lynda Support](https://t.me/LyndaEagleSupport) if I go offline
+-> [Lynda's Repo](https://waa.ai/a)
+-> Report [Help Support](https://t.me/DamienHelp) if I Go Offline
 ==========================
-`Maintained by` @YorktownEagleUnion
+`Maintained by` @AmineSoukara
 
 """
 
 HELP_STRINGS = """
-Hey there! My name is *{}*.
-I'm a part of Eagle Union.
-Have a look at the following for an idea of some of \
-the things I can help you with.
-I'm managed by [Aman_Ahmed](https://t.me/Aman_Ahmed)
-Chatbot module from [TheRealPhoenixBot](https://github.com/rsktg/TheRealPhoenixBot.git)
-Disaster module from [SaitamaRobot](https://github.com/AnimeKaizoku/SaitamaRobot)
-*Main* commands available:
+Hey There! My Name is *{}*.
+I am a group management bot, here to help you get around and keep the order in your groups!
+I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
+I'm Managed By [ＤＡＭＩＥＮ ＸＭＡＲＳ](https://t.me/AmineSoukara)
+*Helpful Commands :*
  - /start: start the bot
  - /help: PM's you this message.
  - /help <module name>: PM's you info about that module.
@@ -46,15 +43,15 @@ Disaster module from [SaitamaRobot](https://github.com/AnimeKaizoku/SaitamaRobot
    - in a group: will redirect you to pm, with all that chat's settings.
 
 {}
-And the following:
-""".format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
+And The Following :
+""".format(dispatcher.bot.first_name, "" if Not ALLOW_EXCL Else "\nAll Commands Can Either Be Used With / Or !.\n")
 
-LYNDA_IMG = "https://telegra.ph/file/35005c01182645232f2d3.jpg"
+LYNDA_IMG = "https://telegra.ph/file/c50ec8d44e11b7198d67b.jpg"
 
-DONATE_STRING = """Heya, glad to hear you want to donate!
-Lynda is hosted on one of Digital Ocean Servers. \
-You can donate to the original writer of the Base code, Paul
-There are two ways of supporting him; [PayPal](paypal.me/PaulSonOfLars), or [Monzo](monzo.me/paulnionvestergaardlarsen)."""
+DONATE_STRING = """Hi Ya, Glad To Hear You Want To Donate!
+Help B'darija is Hosted On One Of Digital Ocean Servers. \
+You Can Donate To The Original Writer Of The Base Code, Paul
+There Are Two Ways Of Supporting Him : [PayPal](paypal.me/AmineSoukara), Or [Monzo](monzo.me/AmineSoukara)."""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -143,14 +140,14 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             first_name = update.effective_user.first_name
             buttons = InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="👥 Add Lynda to your group", url="https://t.me/LyndaRobot?startgroup=new")],
-                [InlineKeyboardButton(text="🙋 Support Group", url="https://t.me/LyndaEagleSupport"), InlineKeyboardButton(text="🚫 Global Logs", url="https://t.me/LyndaGLogs")],
-                [InlineKeyboardButton(text="❔ Help", callback_data="help_back"), InlineKeyboardButton(text="🔔 Update Channel", url="https://t.me/LyndaUpdates")]])
+                [[InlineKeyboardButton(text="👥 Add Help B'darija To Your Group", url="https://t.me/HelpBdarijaRobot?startgroup=new")],
+                [InlineKeyboardButton(text="👨‍💻 Support Group", url="https://t.me/DamienHelp"), InlineKeyboardButton(text="🚫 Global Logs", url="https://t.me/LyndaGLogs")],
+                [InlineKeyboardButton(text="❗ Help ❗", callback_data="help_back"), InlineKeyboardButton(text="🔔 Update Channel", url="https://t.me/HelpBdarija")]])
             update.effective_message.reply_photo(LYNDA_IMG,
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN, reply_markup=buttons)
     else:
-        update.effective_message.reply_text("Yo, whadup?")
+        update.effective_message.reply_text("Yo, Wassup?")
 
 
 # for test purposes
