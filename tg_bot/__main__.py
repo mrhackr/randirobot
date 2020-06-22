@@ -44,7 +44,7 @@ I'm Managed By [ＤＡＭＩＥＮ ＸＭＡＲＳ](https://t.me/AmineSoukara)
 
 {}
 And The Following :
-""".format(dispatcher.bot.first_name, "" if Not ALLOW_EXCL Else "\nAll Commands Can Either Be Used With / Or !.\n")
+""".format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll Commands Can Either Be Used With / Or !.\n")
 
 LYNDA_IMG = "https://telegra.ph/file/c50ec8d44e11b7198d67b.jpg"
 
