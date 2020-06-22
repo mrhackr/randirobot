@@ -17,38 +17,35 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-Hi {}, My Name is {}! 
-// I'm A Group Management Bot With A Lot Of Special Features.
-You Can Find The List Of Available Commands With /Help. Made With Love In 🇲🇦
-==========================
--> [Lynda's Repo](https://waa.ai/a)
--> Report [Help Support](https://t.me/DamienHelp) if I Go Offline
-==========================
-`Maintained by` @AmineSoukara
+Hi *{}* , My Name Is *{}* ! 🇲🇦
+I'm A Group Management Bot With A Lot Of Special Features.
+You Can Find The List Of Available Commands With /Help
+
+● *I'm Managed By :* [ＤＡＭＩＥＮ ＸＭＡＲＳ](https://t.me/AmineSoukara)
+● *Report* [Help Support](https://t.me/DamienHelp) *if I Go Offline*
+● *Made With Love In* 🇲🇦
 
 """
 
 HELP_STRINGS = """
-Hey There! My Name is *{}*.
-I am a group management bot, here to help you get around and keep the order in your groups!
-I have lots of handy features, such as flood control, a warning system, a note keeping system, and even predetermined replies on certain keywords.
-I'm Managed By [ＤＡＭＩＥＮ ＸＭＡＲＳ](https://t.me/AmineSoukara)
-*Helpful Commands :*
- - /start: start the bot
- - /help: PM's you this message.
- - /help <module name>: PM's you info about that module.
- - /donate: information about how to donate!
- - /settings:
-   - in PM: will send you your settings for all supported modules.
-   - in a group: will redirect you to pm, with all that chat's settings.
-
+Hey There! My Name Is *{}*.
+I'm A Group Management Bot, Here To Help You Get Around And Keep The Order in Your Groups!
+I Have Lots Of Handy Features, Such As Flood Control, A Warning System, A Note Keeping System, And Even Predetermined Replies On Certain Keywords.
+✅ *Helpful Commands :*
+ ○ /start : Start The Bot
+ ○ /help : PM's You This Message.
+ ○ /help <module name> : PM's You info About That Module.
+ ○ /donate : Information About How To Donate!
+ ○ /settings:
+   — *In PM :* Will Send You Your Settings For All Supported Modules.
+   — *In A Group :* Will Redirect You To PM, With All That Chat's Settings.
 {}
-And The Following :
-""".format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll Commands Can Either Be Used With / Or !.\n")
+*And The Following :*
+""".format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "All Commands Can Either Be Used With / Or !")
 
 LYNDA_IMG = "https://telegra.ph/file/c50ec8d44e11b7198d67b.jpg"
 
-DONATE_STRING = """Hi Ya, Glad To Hear You Want To Donate!
+DONATE_STRING = """Hi Ya 👋, Glad To Hear You Want To Donate!
 Help B'darija is Hosted On One Of Digital Ocean Servers. \
 You Can Donate To The Original Writer Of The Base Code, Paul
 There Are Two Ways Of Supporting Him : [PayPal](paypal.me/AmineSoukara), Or [Monzo](monzo.me/AmineSoukara)."""
@@ -113,7 +110,7 @@ def send_help(chat_id, text, keyboard=None):
 @run_async
 def test(bot: Bot, update: Update):
     # pprint(eval(str(update)))
-    # update.effective_message.reply_text("Hola tester! _I_ *have* `markdown`", parse_mode=ParseMode.MARKDOWN)
+    # update.effective_message.reply_text("Hello Tester! _I_ *have* `markdown`", parse_mode=ParseMode.MARKDOWN)
     update.effective_message.reply_text("This person edited a message")
     print(update.effective_message)
 
@@ -140,9 +137,9 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             first_name = update.effective_user.first_name
             buttons = InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="👥 Add Help B'darija To Your Group", url="https://t.me/HelpBdarijaRobot?startgroup=new")],
-                [InlineKeyboardButton(text="👨‍💻 Support Group", url="https://t.me/DamienHelp"), InlineKeyboardButton(text="🚫 Global Logs", url="https://t.me/LyndaGLogs")],
-                [InlineKeyboardButton(text="❗ Help ❗", callback_data="help_back"), InlineKeyboardButton(text="🔔 Update Channel", url="https://t.me/HelpBdarija")]])
+                [[InlineKeyboardButton(text="✅ Add Help B'darija To Your Group ✅", url="https://t.me/HelpBdarijaRobot?startgroup=new")],
+                [InlineKeyboardButton(text="👨‍💻 Support Group", url="https://t.me/DamienHelp"), InlineKeyboardButton(text="🔔 Update Channel", url="https://t.me/HelpBdarija")],
+                [InlineKeyboardButton(text="❗ Help ❗", callback_data="help_back")]])
             update.effective_message.reply_photo(LYNDA_IMG,
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN, reply_markup=buttons)
@@ -237,16 +234,16 @@ def get_help(bot: Bot, update: Update):
     # ONLY send help in PM
     if chat.type != chat.PRIVATE:
 
-        update.effective_message.reply_text("Contact me in PM to get the list of possible commands.",
+        update.effective_message.reply_text("Contact Me In PM To Get The List Of Possible Commands.",
                                             reply_markup=InlineKeyboardMarkup(
-                                                [[InlineKeyboardButton(text="Help",
+                                                [[InlineKeyboardButton(text="ℹ Help ℹ",
                                                                        url="t.me/{}?start=help".format(
                                                                            bot.username))]]))
         return
 
     elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
-        text = "Here is the available help for the *{}* module:\n".format(HELPABLE[module].__mod_name__) \
+        text = "ℹ Here is The Available Help For The *{}* Module:\n".format(HELPABLE[module].__mod_name__) \
                + HELPABLE[module].__help__
         send_help(chat.id, text, InlineKeyboardMarkup([[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
