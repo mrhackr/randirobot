@@ -17,7 +17,7 @@ from tg_bot.modules.helper_funcs.chat_status import is_user_admin
 from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
-Hi *{}* , My Name Is *{}* ! 🇲🇦
+Hi *{}* , My Name Is *{}* !
 I'm A Group Management Bot With A Lot Of Special Features.
 You Can Find The List Of Available Commands With /Help
 
@@ -31,14 +31,15 @@ HELP_STRINGS = """
 *Hey There! My Name Is* *{}*.
 I'm A Group Management Bot, Here To Help You Get Around And Keep The Order in Your Groups!
 I Have Lots Of Handy Features, Such As Flood Control, A Warning System, A Note Keeping System, And Even Predetermined Replies On Certain Keywords.
+
 ● *Helpful Commands :*
  ○ /start : Start The Bot
  ○ /help : PM's You This Message.
  ○ /help <module name> : PM's You info About That Module.
  ○ /donate : Information About How To Donate!
  ○ /settings:
-   — In PM : Will Send You Your Settings For All Supported Modules.
-   — In A Group : Will Redirect You To PM, With All That Chat's Settings.
+   • In PM : Will Send You Your Settings For All Supported Modules.
+   • In A Group : Will Redirect You To PM, With All That Chat's Settings.
 
 {}
 *○ And The Following :*
@@ -140,7 +141,7 @@ def start(bot: Bot, update: Update, args: List[str]):
             buttons = InlineKeyboardMarkup(
                 [[InlineKeyboardButton(text="✅ Add Help B'darija To Your Group ✅", url="https://t.me/HelpBdarijaRobot?startgroup=new")],
                 [InlineKeyboardButton(text="👨‍💻 Support Group", url="https://t.me/DamienHelp"), InlineKeyboardButton(text="🔔 Update Channel", url="https://t.me/HelpBdarija")],
-                [InlineKeyboardButton(text="❗ Help - مساعدة ❗", callback_data="help_back")]])
+                [InlineKeyboardButton(text="❕❗ Help ❗❕", callback_data="help_back")]])
             update.effective_message.reply_photo(LYNDA_IMG,
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN, reply_markup=buttons)
@@ -187,7 +188,7 @@ def help_button(bot: Bot, update: Update):
     try:
         if mod_match:
             module = mod_match.group(1)
-            text = "Here is the help for the *{}* module:\n".format(HELPABLE[module].__mod_name__) \
+            text = "✅ Here Is The Help For The *{}* Module:\n".format(HELPABLE[module].__mod_name__) \
                    + HELPABLE[module].__help__
             query.message.reply_text(text=text,
                                      parse_mode=ParseMode.MARKDOWN,
@@ -314,7 +315,7 @@ def settings_button(bot: Bot, update: Update):
             chat_id = next_match.group(1)
             next_page = int(next_match.group(2))
             chat = bot.get_chat(chat_id)
-            query.message.reply_text("Hi there! There Are Quite A Few Settings For {} - Go Ahead And Pick What "
+            query.message.reply_text("Hi There! There Are Quite A Few Settings For {} - Go Ahead And Pick What "
                                      "You're Interested In.".format(chat.title),
                                      reply_markup=InlineKeyboardMarkup(
                                          paginate_modules(next_page + 1, CHAT_SETTINGS, "stngs",
@@ -376,7 +377,7 @@ def donate(bot: Bot, update: Update):
 
         if OWNER_ID != 254318997 and DONATION_LINK:
             update.effective_message.reply_text("You Can Also Donate To The Person Currently Running Me "
-                                                "[here]({})".format(DONATION_LINK),
+                                                "[Here]({})".format(DONATION_LINK),
                                                 parse_mode=ParseMode.MARKDOWN)
 
     else:
