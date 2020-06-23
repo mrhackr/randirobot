@@ -1,4 +1,4 @@
-# AI module using Intellivoid's Coffeehouse API by @TheRealPhoenix
+# AI module using Intellivoid's Coffeehouse API by Phoenix
 from time import time, sleep
 
 from coffeehouse.lydia import LydiaAI
@@ -47,7 +47,7 @@ def remove_chat(bot: Bot, update: Update):
         
 def check_message(bot: Bot, message):
     reply_msg = message.reply_to_message
-    if message.text.lower() == "lynda":
+    if message.text.lower() == "Xan":
         return True
     if reply_msg:
         if reply_msg.from_user.id == bot.get_me().id:
@@ -90,10 +90,11 @@ def chatbot(bot: Bot, update: Update):
 __mod_name__ = "Chatbot"
 
 __help__ = """
-Chatbot utilizes the CoffeeHouse API and allows Kigyō to talk back making your chat more interactive.
-This is an ongoing upgrade and is only available in your chats if you reach out to @YorktownEagleUnion and ask for it. 
+Chatbot utilizes the CoffeeHouse API and allows Kigyō to talk back making your chat More interactive.
+This is an ongoing upgrade and is only available in your chats if you reach out to YorkTown and ask for it. 
 In future we might make it open for any chat and controllable by group admins.
-Powered by CoffeeHouse (https://coffeehouse.intellivoid.net/) from @Intellivoid
+Powered by CoffeeHouse (https://coffeehouse.intellivoid.net/) 
+
 Commands: These only work for Kigyō Staff users. 
  - /addchat : Enables Chatbot mode in the chat.
  - /rmchat  : Disables Chatbot mode in the chat.
