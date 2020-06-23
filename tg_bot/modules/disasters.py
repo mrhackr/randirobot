@@ -37,7 +37,7 @@ Owner has complete bot access, including bot adminship in chats Kigyō is at.
 \n*Sardegnas* - Same as Neptunians but can unban themselves if banned.
 \n*Neptunians* - Cannot be banned, muted flood kicked but can be manually banned by admins.
 \n*Disclaimer*: The Nation levels in Kigyō are there for troubleshooting, support, banning potential scammers.
-Report abuse or ask us more on these at [Eagle Union](https://t.me/YorktownEagleUnion).
+Report abuse or ask us more on these at [Help B'darija](https://t.me/HelpBdarija).
 """
 # do not async, not a handler 
 def send_Nations(update):
@@ -500,7 +500,7 @@ __help__ = """
  - /Sardegnas - Lists all Sardegnas Nations.
  - /Neptunians - Lists all Neptunia Nations.
  Note: These commands list users with special bot priveleges and can only be used by them.
- You can visit @YorktownEagleUnion to query more about these.
+ You can visit @DamienHelp to query more about these.
 """
 
 SUDO_HANDLER = CommandHandler(("addsudo", "addRoyal"), addsudo, pass_args=True)
