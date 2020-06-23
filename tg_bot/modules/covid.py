@@ -13,11 +13,11 @@ def covid(bot: Bot, update: Update):
     text = message.text.split(' ', 1)
     if len(text) == 1:
         r = requests.get(f"https://corona.lmao.ninja/v2/all").json()
-        reply_text = f"🦠 <b>Global Totals</b> 🦠\n😷 Total Cases : {r['cases']:,}\n○ Cases Today : {r['todayCases']:,}\n⚰ Total Deaths : {r['deaths']:,}\n○ Deaths Today : {r['todayDeaths']:,}\n😇 Recovered : {r['recovered']:,}\n🤒 Active : {r['active']:,}\n🤕 Critical : {r['critical']:,}\n○ Cases/Mil : {r['casesPerOneMillion']}\n○ Deaths/Mil : {r['deathsPerOneMillion']}"
+        reply_text = f"🦠 *Global Totals* 🦠\n😷 Total Cases : {r['cases']:,}\n🤧 Cases Today : {r['todayCases']:,}\n💀 Total Deaths : {r['deaths']:,}\n⚰ Deaths Today : {r['todayDeaths']:,}\n😇 Recovered : {r['recovered']:,}\n🤒 Active : {r['active']:,}\n🤕 Critical : {r['critical']:,}\nℹ Cases/Mil : {r['casesPerOneMillion']}\nℹ Deaths/Mil : {r['deathsPerOneMillion']}"
     else:
         variabla = text[1]
         r = requests.get(f"https://corona.lmao.ninja/v2/countries/{variabla}").json()
-        reply_text = f"🦠 <b>Cases For {r['country']} </b>🦠: \n😷 Total Cases : {r['cases']:,}\n○ Cases Today : {r['todayCases']:,}\n⚰ Total Deaths : {r['deaths']:,}\n○ Deaths Today : {r['todayDeaths']:,}\n😇 Recovered: {r['recovered']:,}\n🤒 Active: {r['active']:,}\n🤕 Critical : {r['critical']:,}\n○ Cases/Mil : {r['casesPerOneMillion']}\n○ Deaths/Mil : {r['deathsPerOneMillion']}"
+        reply_text = f"🦠 *Cases For* *{r['country']}* 🦠: \n😷 Total Cases : {r['cases']:,}\n🤧 Cases Today : {r['todayCases']:,}\n💀 Total Deaths : {r['deaths']:,}\n⚰ Deaths Today : {r['todayDeaths']:,}\n😇 Recovered: {r['recovered']:,}\n🤒 Active: {r['active']:,}\n🤕 Critical : {r['critical']:,}\nℹ Cases/Mil : {r['casesPerOneMillion']}\nℹ Deaths/Mil : {r['deathsPerOneMillion']}"
     message.reply_text(reply_text, parse_mode=ParseMode.MARKDOWN)
 
 __help__ = """
