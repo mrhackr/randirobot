@@ -18,29 +18,25 @@ from tg_bot.modules.helper_funcs.misc import paginate_modules
 
 PM_START_TEXT = """
 Hi {}, my name is {}! 
-// I am an Anime themed group management bot with a lot of Special Features.
-You can find the list of available commands with /help.
+✔I am an PowerFull Group Help Robot With A Lot Of Features
+✔You Can Use  /help If You Want To Know My Command And How I Function.
 ==========================
--> [Dia's Repo](https://github.com/Ankith09/LyndaRobot)
--> Report [Dia Support](https://t.me/super_botz_support) if I go offline
+✔[My Creator](t.me/ceowhitehatcracks)
+-> My GLOBAl logs [Click Here ](https://t.me/ceogrouphelpbot_globallogs) if I go offline
 ==========================
-`Maintained by` @super_botz
+✔Made And Maintained by` @CeoWhiteHatCracks
 
 """
 
 HELP_STRINGS = """
-Hey there! My name is *{}*.
-I'm a part of Eagle Union.
-Have a look at the following for an idea of some of \
-the things I can help you with.
-I'm managed by [Ankith_m](https://t.me/Ankith_m)
-Chatbot module from [TheRealPhoenixBot](https://github.com/rsktg/TheRealPhoenixBot.git)
-Disaster module from [SaitamaRobot](https://github.com/AnimeKaizoku/SaitamaRobot)
+Hey there! *{}* I Am CeoGroupHelpBot.
+I'm a part of ╚»★«╝ TheCeoArmy ╚»★«╝.
+Look Things I Can Help You With \
+I'm managed by [CeoWhiteHatCracks](https://t.me/ceowhitehatcracks)
 *Main* commands available:
  - /start: start the bot
  - /help: PM's you this message.
  - /help <module name>: PM's you info about that module.
- - /donate: information about how to donate!
  - /settings:
    - in PM: will send you your settings for all supported modules.
    - in a group: will redirect you to pm, with all that chat's settings.
@@ -52,9 +48,7 @@ And the following:
 LYNDA_IMG = "https://telegra.ph/file/35005c01182645232f2d3.jpg"
 
 DONATE_STRING = """Heya, glad to hear you want to donate!
-Lynda is hosted on one of Digital Ocean Servers. \
-You can donate to the original writer of the Base code, Paul
-There are two ways of supporting him; [PayPal](paypal.me/PaulSonOfLars), or [Monzo](monzo.me/paulnionvestergaardlarsen)."""
+Help Us By Joining @WhitehatCracks"""
 
 IMPORTED = {}
 MIGRATEABLE = []
@@ -143,9 +137,9 @@ def start(bot: Bot, update: Update, args: List[str]):
         else:
             first_name = update.effective_user.first_name
             buttons = InlineKeyboardMarkup(
-                [[InlineKeyboardButton(text="👥 Add Dia to your group", url="https://t.me/diatgbot?startgroup=new")],
-                [InlineKeyboardButton(text="🙋 Support Group", url="https://t.me/super_botz_support"), InlineKeyboardButton(text="🚫 Global Logs", url="https://t.me/gobalban_logs")],
-                [InlineKeyboardButton(text="❔ Help", callback_data="help_back"), InlineKeyboardButton(text="🔔 Update Channel", url="https://t.me/super_botz")]])
+                [[InlineKeyboardButton(text="👥 Add CeoGrouphelpbot to your group", url="https://t.me/ceogrouphelpbot?startgroup=new")],
+                [InlineKeyboardButton(text="🙋 Support Group", url="https://t.me/sensiblegroupmanagement"), InlineKeyboardButton(text="🚫 Global Logs", url="https://t.me/ceogrouphelpbot_globallogs")],
+                [InlineKeyboardButton(text="❔ Help", callback_data="help_back"), InlineKeyboardButton(text="🔔 Update Channel", url="https://t.me/ceogrouphelpbot_globallogs")]])
             update.effective_message.reply_photo(LYNDA_IMG,
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN, reply_markup=buttons)

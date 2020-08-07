@@ -197,7 +197,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
     try:
         bot.send_message(user_id,
                          "You have been globally banned from all groups where I have administrative permissions."
-                         "If you think that this was a mistake, you may appeal your ban here: @Aman_Ahmed",
+                         "If you think that this was a mistake, you may appeal your ban here: @CeoWhiteHatCracks",
                          parse_mode=ParseMode.HTML)
     except:
         pass  # bot probably blocked by user
@@ -328,7 +328,7 @@ def check_and_ban(update, user_id, should_message=True):
         if should_message:
             update.effective_message.reply_text("Alert: This user is globally banned.\n"
                                                 "*bans them from here*.\n"
-                                                "Chat with my Master: @Aman_Ahmed")
+                                                "Chat with my Master: @CeoWhiteHatCracks")
 
 
 @run_async
@@ -387,7 +387,7 @@ def __user_info__(user_id):
         user = sql.get_gbanned_user(user_id)
         if user.reason:
             text += f"\n<b>Reason:</b> {html.escape(user.reason)}"
-        text += "\n<b>Appeal Chat:</b> @Aman_Ahmed"
+        text += "\n<b>Appeal Chat:</b> @CeoWhiteHatCracks"
     else:
         text = text.format("No")
     return text
@@ -407,7 +407,7 @@ __help__ = """
 
 Gbans, also known as global bans, are used by the bot owners to ban spammers across all groups. This helps protect \
 you and your groups by removing spam flooders as quickly as possible.\
-Note: You can appeal gbans or ask gbans at @Aman_Ahmed
+Note: You can appeal gbans or ask gbans at @CeoWhiteHatCracks
 """
 
 GBAN_HANDLER = CommandHandler("gban", gban, pass_args=True)
