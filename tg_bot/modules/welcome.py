@@ -93,30 +93,30 @@ def new_member(bot: Bot, update: Update, job_queue: JobQueue):
 
             # Give the owner a special welcome
             if new_mem.id == OWNER_ID:
-                update.effective_message.reply_text("Oh, Genos? Let's get this moving.")
+                update.effective_message.reply_text("Oh, That is My creator Wow ")
                 welcome_log = (f"{html.escape(chat.title)}\n"
                                f"#USER_JOINED\n"
                                f"Bot Owner just joined the chat")
 
             # Welcome Devs
             elif new_mem.id in DEV_USERS:
-                update.effective_message.reply_text("Whoa! A member of the Eagle Union just joined!")
+                update.effective_message.reply_text("Whoa! A member of the ╚»★«╝ TheCeoArmy ╚»★«╝ just joined!")
 
             # Welcome Sudos
             elif new_mem.id in SUDO_USERS:
-                update.effective_message.reply_text("Huh! A Royal Nation just joined! Stay Alert!")
+                update.effective_message.reply_text("Huh! A Sudo just joined! Stay Alert!")
 
             # Welcome Support
             elif new_mem.id in SUPPORT_USERS:
-                update.effective_message.reply_text("Huh! Someone with a Sakura Nation level just joined!")
+                update.effective_message.reply_text("Huh! Support User just joined!")
 
             # Welcome Whitelisted
             elif new_mem.id in SARDEGNA_USERS:
-                update.effective_message.reply_text("Oof! A Sardegna Nation just joined!")
+                update.effective_message.reply_text("Oof! A Sardegna  just joined!")
 
             # Welcome Sardegnas
             elif new_mem.id in WHITELIST_USERS:
-                update.effective_message.reply_text("Oof! A Neptunia Nation just joined!")
+                update.effective_message.reply_text("Oof! A Unbannable Nation just joined!")
 
             # Welcome yourself
             elif new_mem.id == bot.id:
@@ -199,7 +199,7 @@ def new_member(bot: Bot, update: Update, job_queue: JobQueue):
                     new_join_mem = f"[{escape_markdown(new_mem.first_name)}](tg://user?id={user.id})"
                     message = msg.reply_text(f"{new_join_mem}, click the button below to prove you're human.\nYou have 160 seconds.",
                                              reply_markup=InlineKeyboardMarkup([{InlineKeyboardButton(
-                                                 text="Yes, I'm human.",
+                                                 text="✔Yo ! I Am human ✔.",
                                                  callback_data=f"user_join_({new_mem.id})")}]),
                                              parse_mode=ParseMode.MARKDOWN)
                     bot.restrict_chat_member(chat.id, new_mem.id,
@@ -272,7 +272,7 @@ def left_member(bot: Bot, update: Update):
 
             # Give the owner a special goodbye
             if left_mem.id == OWNER_ID:
-                update.effective_message.reply_text("Oi! Genos! He left..")
+                update.effective_message.reply_text("Oi! My Creator He left..")
                 return
 
             # Give the devs a special goodbye
@@ -325,7 +325,7 @@ def welcome(bot: Bot, update: Update, args: List[str]):
     if not args or args[0].lower() == "noformat":
         noformat = True
         pref, welcome_m, welcome_type = sql.get_welc_pref(chat.id)
-        update.effective_message.reply_text(f"This chat has it's welcome setting set to: `{pref}`.\n"
+        update.effective_message.reply_text(f"This chat has it's welcome setting set to✔: `{pref}`.\n"
                                             f"*The welcome message (not filling the {{}}) is:*",
                                             parse_mode=ParseMode.MARKDOWN)
 
@@ -351,11 +351,11 @@ def welcome(bot: Bot, update: Update, args: List[str]):
     elif len(args) >= 1:
         if args[0].lower() in ("on", "yes"):
             sql.set_welc_preference(str(chat.id), True)
-            update.effective_message.reply_text("Okay! I'll greet members when they join.")
+            update.effective_message.reply_text("Okay! I'll greet members when they join✔.")
 
         elif args[0].lower() in ("off", "no"):
             sql.set_welc_preference(str(chat.id), False)
-            update.effective_message.reply_text("I'll go loaf around and not welcome anyone then.")
+            update.effective_message.reply_text("I'll go loaf around and not welcome anyone then✔.")
 
         else:
             update.effective_message.reply_text("I understand 'on/yes' or 'off/no' only!")
