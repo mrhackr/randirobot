@@ -141,7 +141,7 @@ def save(bot: Bot, update: Update):
 
     sql.add_note_to_db(chat_id, note_name, text, data_type, buttons=buttons, file=content)
 
-    msg.reply_text(f"Sure I Have! Added **{note_name}**.\nGet it with /get **{note_name}**, or #**{note_name}**")
+    msg.reply_text(f"Sure I Have! Added ` ** {note_name} **.\nGet it with /get ` ** {note_name} **, or # ` **{note_name}**")
 
     if msg.reply_to_message and msg.reply_to_message.from_user.is_bot:
         if text:
@@ -177,7 +177,7 @@ def list_notes(bot: Bot, update: Update):
 
     msg = "*Notes in chat:*\n"
     for note in note_list:
-        note_name = escape_markdown(f" - **{note.name}**\n")
+        note_name = escape_markdown(f" - ` **{note.name}**\n")
         if len(msg) + len(note_name) > MAX_MESSAGE_LENGTH:
             update.effective_message.reply_text(msg, parse_mode=ParseMode.MARKDOWN)
             msg = ""
