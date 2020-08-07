@@ -88,7 +88,7 @@
       "TOKEN": {
          "description": "Your bot token.",
          "required": true,
-         "value": "1314574287:AAGeUaouDU-wW8tRBTOAK2aAubr0LoxGKzU"
+         "value": ""
       },
       "URL": {
          "description": "The Heroku App URL :-  https://<appname>.herokuapp.com/",
