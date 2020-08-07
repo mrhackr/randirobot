@@ -2,7 +2,7 @@
    "addons": [
       {
          "options": {
-            "version": "9.5"
+            "version": "12"
          },
          "plan": "heroku-postgresql"
       }
@@ -113,6 +113,6 @@
       "manager",
       "Kigyō"
    ],
-   "name": "Shit Processor bot",
+   "name": "CEO GROUP HELP",
    "repository": "https://github.com/mrhackr/randirobot"
 }
