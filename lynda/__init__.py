@@ -64,8 +64,6 @@ if ENV:
     WEBHOOK = bool(os.environ.get('WEBHOOK', False))
     URL = os.environ.get('URL', "")  # Does not contain token
     PORT = int(os.environ.get('PORT', 5000))
-    API_ID = os.environ.get('API_ID', None)
-    API_HASH = os.environ.get('API_HASH', None)
     CERT_PATH = os.environ.get("CERT_PATH")
     DB_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
     DONATION_LINK = os.environ.get('DONATION_LINK')
@@ -129,8 +127,6 @@ else:
     URL = Config.URL
     PORT = Config.PORT
     CERT_PATH = Config.CERT_PATH
-    API_ID = Config.API_ID
-    API_HASH = Config.API_HASH
     DB_URI = Config.SQLALCHEMY_DATABASE_URI
     DONATION_LINK = Config.DONATION_LINK
     LOAD = Config.LOAD
@@ -151,7 +147,7 @@ else:
 SUDO_USERS.add(OWNER_ID)
 DEV_USERS.add(OWNER_ID)
 
-telethn = TelegramClient("lynda", API_ID, API_HASH)
+telethn = TelegramClient("lynda")
 updater = tg.Updater(TOKEN, workers=WORKERS)
 dispatcher = updater.dispatcher
 
@@ -163,14 +159,6 @@ SARDEGNA_USERS = list(SARDEGNA_USERS)
 SPAMMERS = list(SPAMMERS)
 
 # SpamWatch
-if SW_API == "None":
-    spam_watch = None
-    LOGGER.warning("SpamWatch API key is missing! Check your config var")
-else:
-    try:
-        spam_watch = spamwatch.Client(SW_API)
-    except Exception:
-        spam_watch = None
 
 # Load at end to ensure all prev variables have been set
 from lynda.modules.helper_funcs.handlers import CustomCommandHandler, CustomRegexHandler, CustomMessageHandler
