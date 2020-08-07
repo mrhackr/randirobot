@@ -1,5 +1,4 @@
 future
-covid
 emoji
 beautifulsoup4
 requests
@@ -15,6 +14,7 @@ geopy
 nltk
 tswift
 psutil
+fontTools
 aiohttp>=2.2.5
 Pillow>=4.2.0
 CurrencyConverter
@@ -24,10 +24,12 @@ speedtest-cli
 coffeehouse
 typing
 gtts
-PTable
 wikipedia
 pyowm
 animu-cf
 uptime
+psutil
 py-cpuinfo
 nekos.py
+spamwatch
+telethon
