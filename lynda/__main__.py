@@ -10,7 +10,7 @@ from telegram.ext.dispatcher import run_async, DispatcherHandlerStop
 from telegram.utils.helpers import escape_markdown
 
 from lynda import dispatcher, updater, TOKEN, WEBHOOK, OWNER_ID, DONATION_LINK, CERT_PATH, PORT, URL, LOGGER, \
-    ALLOW_EXCL, telethn
+    ALLOW_EXCL, telethon
 
 from lynda.modules import ALL_MODULES
 from lynda.modules.helper_funcs.chat_status import is_user_admin
