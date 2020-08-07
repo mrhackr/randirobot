@@ -3,9 +3,6 @@ import os
 import sys
 import time
 import telegram.ext as tg
-import spamwatch
-
-from telethon import TelegramClient
 
 StartTime = time.time()
 
@@ -35,28 +32,28 @@ if ENV:
     OWNER_USERNAME = os.environ.get("OWNER_USERNAME", None)
 
     try:
-        SUDO_USERS = {int(x) for x in os.environ.get("SUDO_USERS", "").split()}
-        DEV_USERS = {int(x) for x in os.environ.get("DEV_USERS", "").split()}
+        SUDO_USERS = set(int(x) for x in os.environ.get("SUDO_USERS", "").split())
+        DEV_USERS = set(int(x) for x in os.environ.get("DEV_USERS", "").split())
     except ValueError:
         raise Exception("Your sudo or dev users list does not contain valid integers.")
 
     try:
-        SUPPORT_USERS = {int(x) for x in os.environ.get("SUPPORT_USERS", "").split()}
+        SUPPORT_USERS = set(int(x) for x in os.environ.get("SUPPORT_USERS", "").split())
     except ValueError:
         raise Exception("Your support users list does not contain valid integers.")
 
     try:
-        SPAMMERS = {int(x) for x in os.environ.get("SPAMMERS", "").split()}
+        SPAMMERS = set(int(x) for x in os.environ.get("SPAMMERS", "").split())
     except ValueError:
         raise Exception("Your spammers users list does not contain valid integers.")
 
     try:
-        WHITELIST_USERS = {int(x) for x in os.environ.get("WHITELIST_USERS", "").split()}
+        WHITELIST_USERS = set(int(x) for x in os.environ.get("WHITELIST_USERS", "").split())
     except ValueError:
         raise Exception("Your whitelisted users list does not contain valid integers.")
 
     try:
-        SARDEGNA_USERS = {int(x) for x in os.environ.get("SARDEGNA_USERS", "").split()}
+        SARDEGNA_USERS = set(int(x) for x in os.environ.get("SARDEGNA_USERS", "").split())
     except ValueError:
         raise Exception("Your Sardegna users list does not contain valid integers.")
 
@@ -65,7 +62,7 @@ if ENV:
     URL = os.environ.get('URL', "")  # Does not contain token
     PORT = int(os.environ.get('PORT', 5000))
     CERT_PATH = os.environ.get("CERT_PATH")
-    DB_URI = os.environ.get('SQLALCHEMY_DATABASE_URI')
+    DB_URI = os.environ.get('DATABASE_URL')
     DONATION_LINK = os.environ.get('DONATION_LINK')
     LOAD = os.environ.get("LOAD", "").split()
     NO_LOAD = os.environ.get("NO_LOAD", "translation").split()
@@ -81,12 +78,10 @@ if ENV:
     LASTFM_API_KEY = os.environ.get('LASTFM_API_KEY', None)
     DEEPFRY_TOKEN = os.environ.get('DEEPFRY_TOKEN', None)
     API_WEATHER = os.environ.get('API_WEATHER', None)
-    SW_API = os.environ.get('SW_API', None)
 
 else:
     from lynda.config import Development as Config
-
-    TOKEN = Config.TOKEN
+    TOKEN = Config.API_KEY
 
     try:
         OWNER_ID = int(Config.OWNER_ID)
@@ -97,28 +92,28 @@ else:
     OWNER_USERNAME = Config.OWNER_USERNAME
 
     try:
-        SUDO_USERS = {int(x) for x in Config.SUDO_USERS or []}
-        DEV_USERS = {int(x) for x in Config.DEV_USERS or []}
+        SUDO_USERS = set(int(x) for x in Config.SUDO_USERS or [])
+        DEV_USERS = set(int(x) for x in Config.DEV_USERS or [])
     except ValueError:
         raise Exception("Your sudo or dev users list does not contain valid integers.")
 
     try:
-        SUPPORT_USERS = {int(x) for x in Config.SUPPORT_USERS or []}
+        SUPPORT_USERS = set(int(x) for x in Config.SUPPORT_USERS or [])
     except ValueError:
         raise Exception("Your support users list does not contain valid integers.")
 
     try:
-        SPAMMERS = {int(x) for x in Config.SPAMMERS or []}
+        SPAMMERS = set(int(x) for x in Config.SPAMMERS or [])
     except ValueError:
         raise Exception("Your spammers users list does not contain valid integers.")
 
     try:
-        WHITELIST_USERS = {int(x) for x in Config.WHITELIST_USERS or []}
+        WHITELIST_USERS = set(int(x) for x in Config.WHITELIST_USERS or [])
     except ValueError:
         raise Exception("Your whitelisted users list does not contain valid integers.")
 
     try:
-        SARDEGNA_USERS = {int(x) for x in Config.SARDEGNA_USERS or []}
+        SARDEGNA_USERS = set(int(x) for x in Config.SARDEGNA_USERS or [])
     except ValueError:
         raise Exception("Your Sardegna users list does not contain valid integers.")
 
@@ -127,6 +122,7 @@ else:
     URL = Config.URL
     PORT = Config.PORT
     CERT_PATH = Config.CERT_PATH
+
     DB_URI = Config.SQLALCHEMY_DATABASE_URI
     DONATION_LINK = Config.DONATION_LINK
     LOAD = Config.LOAD
@@ -143,11 +139,9 @@ else:
     LASTFM_API_KEY = Config.LASTFM_API_KEY
     DEEPFRY_TOKEN = Config.DEEPFRY_TOKEN
     API_WEATHER = Config.API_WEATHER
-    SW_API = Config.SW_API
 SUDO_USERS.add(OWNER_ID)
 DEV_USERS.add(OWNER_ID)
 
-telethn = TelegramClient("lynda")
 updater = tg.Updater(TOKEN, workers=WORKERS)
 dispatcher = updater.dispatcher
 
@@ -158,8 +152,6 @@ SUPPORT_USERS = list(SUPPORT_USERS)
 SARDEGNA_USERS = list(SARDEGNA_USERS)
 SPAMMERS = list(SPAMMERS)
 
-# SpamWatch
-
 # Load at end to ensure all prev variables have been set
 from lynda.modules.helper_funcs.handlers import CustomCommandHandler, CustomRegexHandler, CustomMessageHandler
 
@@ -168,8 +160,8 @@ tg.RegexHandler = CustomRegexHandler
 tg.CommandHandler = CustomCommandHandler
 tg.MessageHandler = CustomMessageHandler
 
-
-def spamfilters(_text, user_id, _chat_id):
+def spamfilters(text, user_id, chat_id):
+    #print("{} | {} | {}".format(text, user_id, chat_id))
     if int(user_id) in SPAMMERS:
         print("This user is a spammer!")
         return True
