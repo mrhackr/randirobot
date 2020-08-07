@@ -2,7 +2,7 @@
    "addons": [
       {
          "options": {
-            "version": "9.5"
+            "version": "12"
          },
          "plan": "heroku-postgresql"
       }
@@ -88,7 +88,7 @@
       "TOKEN": {
          "description": "Your bot token.",
          "required": true,
-         "value": "1314574287:AAGeUaouDU-wW8tRBTOAK2aAubr0LoxGKzU"
+         "value": ""
       },
       "URL": {
          "description": "The Heroku App URL :-  https://<appname>.herokuapp.com/",
@@ -113,6 +113,6 @@
       "manager",
       "Kigyō"
    ],
-   "name": "Shit Processor bot",
+   "name": "CEO GROUP HELP",
    "repository": "https://github.com/mrhackr/randirobot"
 }
