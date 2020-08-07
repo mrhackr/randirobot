@@ -197,7 +197,7 @@ def gban(bot: Bot, update: Update, args: List[str]):
     try:
         bot.send_message(user_id,
                          "You have been globally banned from all groups where I have administrative permissions."
-                         "If you think that this was a mistake, you may appeal your ban here: @CeoWhiteHatCracks",
+                         "If you think that this was a mistake, you may appeal your ban here: [Gban Regression](https://t.me/ceogrouphelpbot_gbanregress)",
                          parse_mode=ParseMode.HTML)
     except:
         pass  # bot probably blocked by user
