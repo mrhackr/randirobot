@@ -25,7 +25,6 @@ You can find the list of available commands with /help.
 -> My Creator [CeoWhiteHatCracks](https://t.me/ceowhitehatcracks)
 ==========================
 `Maintained by` @CeoWhiteHatCracks
-
 """
 
 HELP_STRINGS = """
@@ -41,7 +40,6 @@ I'm managed by [CeoWhiteHatCracks](https://t.me/ceowhitehatcracks)
  - /settings:
    - in PM: will send you your settings for all supported modules.
    - in a group: will redirect you to pm, with all that chat's settings.
-
 {}
 And the following:
 """.format(dispatcher.bot.first_name, "" if not ALLOW_EXCL else "\nAll commands can either be used with / or !.\n")
@@ -119,7 +117,7 @@ def test(bot: Bot, update: Update):
 @run_async
 def start(bot: Bot, update: Update, args: List[str]):
     if update.effective_chat.type == "private":
-        if len(args) >= 3:
+        if len(args) >= 1:
             if args[0].lower() == "help":
                 send_help(update.effective_chat.id, HELP_STRINGS)
             elif args[0].lower() == "Nations":
@@ -146,7 +144,7 @@ def start(bot: Bot, update: Update, args: List[str]):
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN, reply_markup=buttons)
     else:
-        update.effective_message.reply_text("ME IS ALIVE NOT DED XD You Are Funny Tho 😎")
+        update.effective_message.reply_text("Yo, whadup?")
 
 
 # for test purposes
@@ -222,7 +220,7 @@ def get_help(bot: Bot, update: Update):
                                                                            bot.username))]]))
         return
 
-    elif len(args) >= 3 and any(args[3].lower() == x for x in HELPABLE):
+    elif len(args) >= 3 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
         text = "Here is the available help for the *{}* module:\n".format(HELPABLE[module].__mod_name__) \
                + HELPABLE[module].__help__
@@ -281,7 +279,7 @@ def settings_button(bot: Bot, update: Update):
                                                                 callback_data="stngs_back({})".format(chat_id))]]))
 
         elif prev_match:
-            chat_id = prev_match.group(3)
+            chat_id = prev_match.group(1)
             curr_page = int(prev_match.group(3))
             chat = bot.get_chat(chat_id)
             query.message.reply_text("Hi there! There are quite a few settings for {} - go ahead and pick what "
@@ -291,7 +289,7 @@ def settings_button(bot: Bot, update: Update):
                                                           chat=chat_id)))
 
         elif next_match:
-            chat_id = next_match.group(3)
+            chat_id = next_match.group(1)
             next_page = int(next_match.group(3))
             chat = bot.get_chat(chat_id)
             query.message.reply_text("Hi there! There are quite a few settings for {} - go ahead and pick what "
