@@ -133,10 +133,10 @@ def info(bot: Bot, update: Update, args: List[str]):
     Nation_level_present = False
 
     if user.id == OWNER_ID:
-        text += "\nThe Nation level of this person is 'God' I Can Never Think To Do Something With This Use."
+        text += "\nThe Nation level of this person is 'God' I Can Never Think To Do Something With This User."
         Nation_level_present = True
     elif user.id in DEV_USERS:
-        text += "\nThis member is one of 'Hero Union' Or DeV I Can Not Think To Do AnyThing With This Use."
+        text += "\nThis member is one of 'Hero Union' Or DeV I Can Not Think To Do AnyThing With This User."
         Nation_level_present = True
     elif user.id in SUDO_USERS:
         text += "\nThe Nation level of this person is 'Royal' This user is nearly powerfull as my creator but not that powerfull."
