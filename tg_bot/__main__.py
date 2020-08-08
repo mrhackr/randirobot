@@ -222,7 +222,7 @@ def get_help(bot: Bot, update: Update):
                                                                            bot.username))]]))
         return
 
-    elif len(args) >= 3 and any(args[1].lower() == x for x in HELPABLE):
+    elif len(args) >= 3 and any(args[3].lower() == x for x in HELPABLE):
         module = args[1].lower()
         text = "Here is the available help for the *{}* module:\n".format(HELPABLE[module].__mod_name__) \
                + HELPABLE[module].__help__
@@ -281,7 +281,7 @@ def settings_button(bot: Bot, update: Update):
                                                                 callback_data="stngs_back({})".format(chat_id))]]))
 
         elif prev_match:
-            chat_id = prev_match.group(1)
+            chat_id = prev_match.group(3)
             curr_page = int(prev_match.group(3))
             chat = bot.get_chat(chat_id)
             query.message.reply_text("Hi there! There are quite a few settings for {} - go ahead and pick what "
@@ -291,7 +291,7 @@ def settings_button(bot: Bot, update: Update):
                                                           chat=chat_id)))
 
         elif next_match:
-            chat_id = next_match.group(1)
+            chat_id = next_match.group(3)
             next_page = int(next_match.group(3))
             chat = bot.get_chat(chat_id)
             query.message.reply_text("Hi there! There are quite a few settings for {} - go ahead and pick what "
