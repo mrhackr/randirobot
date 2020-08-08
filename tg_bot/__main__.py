@@ -57,7 +57,7 @@ STATS = []
 USER_INFO = []
 DATA_IMPORT = []
 DATA_EXPORT = []
-
+GDPR = []
 CHAT_SETTINGS = {}
 USER_SETTINGS = {}
 
