@@ -119,7 +119,7 @@ def test(bot: Bot, update: Update):
 @run_async
 def start(bot: Bot, update: Update, args: List[str]):
     if update.effective_chat.type == "private":
-        if len(args) >= 1:
+        if len(args) >= 3:
             if args[0].lower() == "help":
                 send_help(update.effective_chat.id, HELP_STRINGS)
             elif args[0].lower() == "Nations":
@@ -146,7 +146,7 @@ def start(bot: Bot, update: Update, args: List[str]):
                 PM_START_TEXT.format(escape_markdown(first_name), escape_markdown(bot.first_name), OWNER_ID),
                 parse_mode=ParseMode.MARKDOWN, reply_markup=buttons)
     else:
-        update.effective_message.reply_text("Yo, whadup?")
+        update.effective_message.reply_text("ME IS ALIVE NOT DED XD You Are Funny Tho 😎")
 
 
 # for test purposes
