@@ -84,119 +84,89 @@ def gifid(bot: Bot, update: Update):
 
 
 @run_async
-def info(update, context):
-    args = context.args
-    msg = update.effective_message  # type: Optional[Message]
-    user_id = extract_user(update.effective_message, args)
+def info(bot: Bot, update: Update, args: List[str]):
+    message = update.effective_message
     chat = update.effective_chat
+    user_id = extract_user(update.effective_message, args)
 
     if user_id:
-        user = context.bot.get_chat(user_id)
+        user = bot.get_chat(user_id)
 
-    elif not msg.reply_to_message and not args:
-        user = msg.from_user
+    elif not message.reply_to_message and not args:
+        user = message.from_user
 
-    elif not msg.reply_to_message and (
-        not args
-        or (
-            len(args) >= 1
-            and not args[0].startswith("@")
-            and not args[0].isdigit()
-            and not msg.parse_entities([MessageEntity.TEXT_MENTION])
-        )
-    ):
-        msg.reply_text("I can't extract a user from this.")
+    elif not message.reply_to_message and (not args or (
+            len(args) >= 1 and not args[0].startswith("@") and not args[0].isdigit() and not message.parse_entities(
+        [MessageEntity.TEXT_MENTION]))):
+        message.reply_text("I can't extract a user from this.")
         return
 
     else:
         return
 
-    del_msg = msg.reply_text(
-        "Wait Let Me Get some data from <b>My Server</b>...",
-        parse_mode=ParseMode.HTML,
-    )
-
-    text = (
-        "<b>USER INFO</b>:"
-        "\n\nID: <code>{}</code>"
-        "\nFirst Name: {}".format(user.id, html.escape(user.first_name))
-    )
+    text = (f"<b>Characteristics:</b>\n"
+            f"ID: <code>{user.id}</code>\n"
+            f"First Name: {html.escape(user.first_name)}")
 
     if user.last_name:
-        text += "\nLast Name: {}".format(html.escape(user.last_name))
+        text += f"\nLast Name: {html.escape(user.last_name)}"
 
     if user.username:
-        text += "\nUsername: @{}".format(html.escape(user.username))
+        text += f"\nUsername: @{html.escape(user.username)}"
 
-    text += "\nPermanent user link: {}".format(mention_html(user.id, "link"))
+    text += f"\nPermanent user link: {mention_html(user.id, 'link')}"
 
-    text += "\nNumber of profile pics: {}".format(
-        context.bot.get_user_profile_photos(user.id).total_count
-    )
-
-    try:
-        sw = spamwtc.get_ban(int(user.id))
-        if sw:
-            text += "\n\n<b>This person is banned in Spamwatch!</b>"
-            text += f"\nResason: <pre>{sw.reason}</pre>"
-        else:
-            pass
-    except:
-        pass  # Don't break on exceptions like if api is down?
-
-    if user.id == OWNER_ID:
-        text += "\n\nAye this guy is my owner.\nI would never do anything against him!"
-
-    elif user.id in SUDO_USERS:
-        text += (
-            "\n\nThis person is one of my sudo users! "
-            "Nearly as powerful as my owner - so watch it."
-        )
-
-    elif user.id in SUPPORT_USERS:
-        text += (
-            "\n\nThis person is one of my support users! "
-            "Not quite a sudo user, but can still gban you off the map."
-        )
-
-    elif user.id in WHITELIST_USERS:
-        text += (
-            "\n\nThis person has been whitelisted! "
-            "That means I'm not allowed to ban/kick them."
-        )
+    num_chats = sql.get_user_num_chats(user.id)
+    text += f"\nChat count: <code>{num_chats}</code>"
 
     try:
-        memstatus = chat.get_member(user.id).status
-        if memstatus == "administrator" or memstatus == "creator":
-            result = context.bot.get_chat_member(chat.id, user.id)
-            if result.custom_title:
-                text += f"\n\nThis user has custom title <b>{result.custom_title}</b> in this chat."
+        user_member = chat.get_member(user.id)
+        if user_member.status == 'administrator':
+            result = requests.post(f"https://api.telegram.org/bot{TOKEN}/getChatMember?chat_id={chat.id}&user_id={user.id}")
+            result = result.json()["result"]
+            if "custom_title" in result.keys():
+                custom_title = result['custom_title']
+                text += f"\nThis user holds the title <b>{custom_title}</b> here."
     except BadRequest:
         pass
 
-    for mod in USER_INFO:
-        try:
-            mod_info = mod.__user_info__(user.id).strip()
-        except TypeError:
-            mod_info = mod.__user_info__(user.id, chat.id).strip()
-        if mod_info:
-            text += "\n\n" + mod_info
+    Nation_level_present = False
 
-    try:
-        profile = context.bot.get_user_profile_photos(user.id).photos[0][-1]
-        context.bot.sendChatAction(chat.id, "upload_photo")
-        context.bot.send_photo(
-            chat.id,
-            photo=profile,
-            caption=(text),
-            parse_mode=ParseMode.HTML,
-            disable_web_page_preview=True,
-        )
-    except IndexError:
-        context.bot.sendChatAction(chat.id, "typing")
-        msg.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
-    finally:
-        del_msg.delete()
+    if user.id == OWNER_ID:
+        text += "\nThe Nation level of this person is 'God' I Can Never Think To Do Something With This User."
+        Nation_level_present = True
+    elif user.id in DEV_USERS:
+        text += "\nThis member is one of 'Hero Union' Or DeV I Can Not Think To Do AnyThing With This User."
+        Nation_level_present = True
+    elif user.id in SUDO_USERS:
+        text += "\nThe Nation level of this person is 'Royal' This user is nearly powerfull as my creator but not that powerfull."
+        Nation_level_present = True
+    elif user.id in SUPPORT_USERS:
+        text += "\nThe Nation level of this person is 'Sakura'."
+        Nation_level_present = True
+    elif user.id in SARDEGNA_USERS:
+        text += "\nThe Nation level of this person is 'Sardegna'."
+        Nation_level_present = True
+    elif user.id in WHITELIST_USERS:
+        text += "\nThe Nation level of this person is 'Neptunia'."
+        Nation_level_present = True
+
+    if Nation_level_present:
+        text += ' [<a href="http://t.me/{}?start=Nations">?</a>]'.format(bot.username)
+
+    text += "\n"
+    for mod in USER_INFO:
+        if mod.__mod_name__ == "Users":
+            continue
+
+        try:
+            mod_info = mod.__user_info__(user.id)
+        except TypeError:
+            mod_info = mod.__user_info__(user.id, chat.id)
+        if mod_info:
+            text += "\n" + mod_info
+
+    update.effective_message.reply_text(text, parse_mode=ParseMode.HTML, disable_web_page_preview=True)
 
 
 @run_async
