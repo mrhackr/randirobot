@@ -93,7 +93,7 @@ def new_member(bot: Bot, update: Update, job_queue: JobQueue):
 
             # Give the owner a special welcome
             if new_mem.id == OWNER_ID:
-                update.effective_message.reply_text("Oh, Genos? Let's get this moving.")
+                update.effective_message.reply_text("My Creator Just Joined Everyone Behave Yourself")
                 welcome_log = (f"{html.escape(chat.title)}\n"
                                f"#USER_JOINED\n"
                                f"Bot Owner just joined the chat")
@@ -104,7 +104,7 @@ def new_member(bot: Bot, update: Update, job_queue: JobQueue):
 
             # Welcome Sudos
             elif new_mem.id in SUDO_USERS:
-                update.effective_message.reply_text("Huh! A Royal Nation just joined! Stay Alert!")
+                update.effective_message.reply_text("A Sudo Just Joined ✔ Stay Alert") 
 
             # Welcome Support
             elif new_mem.id in SUPPORT_USERS:
@@ -120,7 +120,7 @@ def new_member(bot: Bot, update: Update, job_queue: JobQueue):
 
             # Welcome yourself
             elif new_mem.id == bot.id:
-                update.effective_message.reply_text("Watashi ga kitta!")
+                update.effective_message.reply_text("Wow Thats me")
 
             else:
                 # If welcome message is media, send with appropriate function
@@ -197,9 +197,9 @@ def new_member(bot: Bot, update: Update, job_queue: JobQueue):
                         }
                     })
                     new_join_mem = f"[{escape_markdown(new_mem.first_name)}](tg://user?id={user.id})"
-                    message = msg.reply_text(f"{new_join_mem}, click the button below to prove you're human.\nYou have 160 seconds.",
+                    message = msg.reply_text(f"{new_join_mem}, Please click the button below to prove you're human.\nYou have 160 seconds For Doing That.",
                                              reply_markup=InlineKeyboardMarkup([{InlineKeyboardButton(
-                                                 text="Yes, I'm human.",
+                                                 text="✔Yo , I AM A Human ✔.",
                                                  callback_data=f"user_join_({new_mem.id})")}]),
                                              parse_mode=ParseMode.MARKDOWN)
                     bot.restrict_chat_member(chat.id, new_mem.id,
@@ -249,7 +249,7 @@ def check_not_bot(member, chat_id, message_id, bot, job):
             pass
 
         try:
-            bot.edit_message_text("*kicks user*\nThey can always rejoin and try.", chat_id=chat_id, message_id=message_id)
+            bot.edit_message_text("*Sed I Kicked Them Because They Didnot Clicked The Button *\nThey can always rejoin and try.", chat_id=chat_id, message_id=message_id)
         except:
             pass
 
@@ -272,7 +272,7 @@ def left_member(bot: Bot, update: Update):
 
             # Give the owner a special goodbye
             if left_mem.id == OWNER_ID:
-                update.effective_message.reply_text("Oi! Genos! He left..")
+                update.effective_message.reply_text("Oh My God 😡 My Creator Left")
                 return
 
             # Give the devs a special goodbye
