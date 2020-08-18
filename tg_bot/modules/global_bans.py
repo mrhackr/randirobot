@@ -126,12 +126,12 @@ def gban(bot: Bot, update: Update, args: List[str]):
     else:
         chat_origin = "<b>{}</b>\n".format(chat.id)
 
-   log_message = (f"Global Ban Initiated\n"
-                   f"<b>Originated from:</b> {chat_origin}\n"
-                   f"<b>Admin:</b> {mention_html(user.id, user.first_name)}\n"
-                   f"<b>Banned User:</b> {mention_html(user_chat.id, user_chat.first_name)}\n"
-                   f"<b>Banned User ID:</b> {user_chat.id}\n"
-                   f"<b>Timing :</b> {current_time}\n "
+   log_message = (f"Global Ban Initiated \n"
+                   f"<b>Originated from:</b> {chat_origin} \n"
+                   f"<b>Admin:</b> {mention_html(user.id, user.first_name)} \n"
+                   f"<b>Banned User:</b> {mention_html(user_chat.id, user_chat.first_name)} \n"
+                   f"<b>Banned User ID:</b> {user_chat.id} \n"
+                   f"<b>Timing :</b> {current_time} \n"
                    f"</b> To Regress Or Appeal To Remove Gban You Can Visit @ceogrouphelpbot_gbanregress </b> ")
 
     if reason:
