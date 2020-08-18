@@ -6,8 +6,8 @@ from telegram.error import BadRequest, TelegramError
 from telegram.ext import run_async, CommandHandler, MessageHandler, Filters
 from telegram.utils.helpers import mention_html
 
-import tg_bot.modules.sql.global_bans_sql as sql
-from tg_bot import (
+import skylee.modules.sql.global_bans_sql as sql
+from skylee import (
     dispatcher,
     OWNER_ID,
     SUDO_USERS,
@@ -16,11 +16,11 @@ from tg_bot import (
     MESSAGE_DUMP,
     spamwtc,
 )
-from tg_bot.modules.helper_funcs.chat_status import user_admin, is_user_admin
-from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
-from tg_bot.modules.helper_funcs.filters import CustomFilters
-from tg_bot.modules.helper_funcs.alternate import typing_action, send_action
-from tg_bot.modules.sql.users_sql import get_all_chats
+from skylee.modules.helper_funcs.chat_status import user_admin, is_user_admin
+from skylee.modules.helper_funcs.extraction import extract_user, extract_user_and_text
+from skylee.modules.helper_funcs.filters import CustomFilters
+from skylee.modules.helper_funcs.alternate import typing_action, send_action
+from skylee.modules.sql.users_sql import get_all_chats
 
 GBAN_ENFORCE_GROUP = 6
 
@@ -279,6 +279,14 @@ def ungban(update, context):
         parse_mode=ParseMode.HTML,
     )
     message.reply_text("Person has been un-gbanned.")
+    
+    try:
+        bot.send_message(user_id,
+                         "You have been globally banned from all groups where I have administrative permissions."
+                         "If you think that this was a mistake, you may appeal your ban here: @CeoGroupHelpBot_GbanRegress",
+                         parse_mode=ParseMode.HTML)
+    except:
+        pass
 
 
 @run_async
@@ -409,7 +417,7 @@ def __user_info__(user_id):
         user = sql.get_gbanned_user(user_id)
         if user.reason:
             text += "\nReason: {}".format(html.escape(user.reason))
-            text += "\n\nAppeal at @tg_botbot if you think it's invalid."
+            text += "\n\nAppeal at @skyleebot if you think it's invalid."
     else:
         text = text.format("No")
     return text
@@ -432,7 +440,7 @@ Spam shield uses @Spamwatch API and Global bans to remove Spammers as much as po
 *What is SpamWatch?*
 
 SpamWatch maintains a large constantly updated ban-list of spambots, trolls, bitcoin spammers and unsavoury characters.
-tg_bot will constantly help banning spammers off from your group automatically So, you don't have to worry about spammers storming your group[.](https://telegra.ph/file/c1051d264a5b4146bd71e.jpg)
+Skylee will constantly help banning spammers off from your group automatically So, you don't have to worry about spammers storming your group[.](https://telegra.ph/file/c1051d264a5b4146bd71e.jpg)
 """
 
 __mod_name__ = "Spam Shield"
