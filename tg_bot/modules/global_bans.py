@@ -6,8 +6,8 @@ from telegram.error import BadRequest, TelegramError
 from telegram.ext import run_async, CommandHandler, MessageHandler, Filters
 from telegram.utils.helpers import mention_html
 
-import skylee.modules.sql.global_bans_sql as sql
-from skylee import (
+import tg_bot.modules.sql.global_bans_sql as sql
+from tg_bot import (
     dispatcher,
     OWNER_ID,
     SUDO_USERS,
@@ -16,11 +16,11 @@ from skylee import (
     MESSAGE_DUMP,
     spamwtc,
 )
-from skylee.modules.helper_funcs.chat_status import user_admin, is_user_admin
-from skylee.modules.helper_funcs.extraction import extract_user, extract_user_and_text
-from skylee.modules.helper_funcs.filters import CustomFilters
-from skylee.modules.helper_funcs.alternate import typing_action, send_action
-from skylee.modules.sql.users_sql import get_all_chats
+from tg_bot.modules.helper_funcs.chat_status import user_admin, is_user_admin
+from tg_bot.modules.helper_funcs.extraction import extract_user, extract_user_and_text
+from tg_bot.modules.helper_funcs.filters import CustomFilters
+from tg_bot.modules.helper_funcs.alternate import typing_action, send_action
+from tg_bot.modules.sql.users_sql import get_all_chats
 
 GBAN_ENFORCE_GROUP = 6
 
@@ -315,23 +315,6 @@ def gbanlist(update, context):
         )
 
 
-def check_and_ban(update, user_id, should_message=True):
-
-    try:
-        spmban = spamwtc.get_ban(int(user_id))
-        if spmban:
-            update.effective_chat.kick_member(user_id)
-            if should_message:
-                update.effective_message.reply_text(
-                    f"This person has been detected as spambot by @SpamWatch and has been removed!\nReason: <code>{spmban.reason}</code>",
-                    parse_mode=ParseMode.HTML,
-                )
-                return
-            else:
-                return
-    except Exception:
-        pass
-
     if sql.is_user_gbanned(user_id):
         update.effective_chat.kick_member(user_id)
         if should_message:
@@ -341,7 +324,7 @@ def check_and_ban(update, user_id, should_message=True):
                 greason = "No reason given"
 
             update.effective_message.reply_text(
-                f"*Alert! this user was GBanned and have been removed!*\n*Reason*: {greason}",
+                f"*Alert! this user was GBanned and have been removed!*\n*Reason IF You Think It Is InValid So Appel At @CeoGroupHelpBot_GbanRegress Reason For Ban *: {greason}",
                 parse_mode=ParseMode.MARKDOWN,
             )
             return
@@ -372,35 +355,6 @@ def enforce_gban(update, context):
                 check_and_ban(update, user.id, should_message=False)
 
 
-@run_async
-@user_admin
-@typing_action
-def gbanstat(update, context):
-    args = context.args
-    if len(args) > 0:
-        if args[0].lower() in ["on", "yes"]:
-            sql.enable_gbans(update.effective_chat.id)
-            update.effective_message.reply_text(
-                "I've enabled Spam Sheild in this group. This will help protect you "
-                "from spammers, unsavoury characters, and the biggest trolls."
-            )
-        elif args[0].lower() in ["off", "no"]:
-            sql.disable_gbans(update.effective_chat.id)
-            update.effective_message.reply_text(
-                "I've disabled Spam sheild in this group. GBans wont affect your users "
-                "anymore. You'll be less protected from any trolls and spammers "
-                "though!"
-            )
-    else:
-        update.effective_message.reply_text(
-            "Give me some arguments to choose a setting! on/off, yes/no!\n\n"
-            "Your current setting is: {}\n"
-            "When True, any gbans that happen will also happen in your group. "
-            "When False, they won't, leaving you at the possible mercy of "
-            "spammers.".format(sql.does_chat_gban(update.effective_chat.id))
-        )
-
-
 def __stats__():
     return "× {} gbanned users.".format(sql.num_gbanned_users())
 
@@ -417,7 +371,7 @@ def __user_info__(user_id):
         user = sql.get_gbanned_user(user_id)
         if user.reason:
             text += "\nReason: {}".format(html.escape(user.reason))
-            text += "\n\nAppeal at @skyleebot if you think it's invalid."
+            text += "\n\nAppeal at @CeoGroupHelpBot_GbanRegress if you think it's invalid."
     else:
         text = text.format("No")
     return text
@@ -440,7 +394,7 @@ Spam shield uses @Spamwatch API and Global bans to remove Spammers as much as po
 *What is SpamWatch?*
 
 SpamWatch maintains a large constantly updated ban-list of spambots, trolls, bitcoin spammers and unsavoury characters.
-Skylee will constantly help banning spammers off from your group automatically So, you don't have to worry about spammers storming your group[.](https://telegra.ph/file/c1051d264a5b4146bd71e.jpg)
+tg_bot will constantly help banning spammers off from your group automatically So, you don't have to worry about spammers storming your group[.](https://telegra.ph/file/c1051d264a5b4146bd71e.jpg)
 """
 
 __mod_name__ = "Spam Shield"
