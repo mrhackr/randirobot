@@ -57,7 +57,7 @@ STATS = []
 USER_INFO = []
 DATA_IMPORT = []
 DATA_EXPORT = []
-GDPR = []
+
 CHAT_SETTINGS = {}
 USER_SETTINGS = {}
 
@@ -180,6 +180,9 @@ def error_callback(bot, update, error):
 def help_button(bot: Bot, update: Update):
     query = update.callback_query
     mod_match = re.match(r"help_module\((.+?)\)", query.data)
+    prev_match = re.match(r"help_prev\((.+?)\)", query.data)
+    next_match = re.match(r"help_next\((.+?)\)", query.data)
+    back_match = re.match(r"help_back", query.data)
     try:
         if mod_match:
             module = mod_match.group(1)
@@ -190,6 +193,24 @@ def help_button(bot: Bot, update: Update):
                                      reply_markup=InlineKeyboardMarkup(
                                          [[InlineKeyboardButton(text="Back", callback_data="help_back")]]))
 
+        elif prev_match:
+            curr_page = int(prev_match.group(1))
+            query.message.reply_text(HELP_STRINGS,
+                                     parse_mode=ParseMode.MARKDOWN,
+                                     reply_markup=InlineKeyboardMarkup(
+                                         paginate_modules(curr_page - 1, HELPABLE, "help")))
+
+        elif next_match:
+            next_page = int(next_match.group(1))
+            query.message.reply_text(HELP_STRINGS,
+                                     parse_mode=ParseMode.MARKDOWN,
+                                     reply_markup=InlineKeyboardMarkup(
+                                         paginate_modules(next_page + 1, HELPABLE, "help")))
+
+        elif back_match:
+            query.message.reply_text(text=HELP_STRINGS,
+                                     parse_mode=ParseMode.MARKDOWN,
+                                     reply_markup=InlineKeyboardMarkup(paginate_modules(0, HELPABLE, "help")))
 
         # ensure no spinny white circle
         bot.answer_callback_query(query.id)
@@ -220,7 +241,7 @@ def get_help(bot: Bot, update: Update):
                                                                            bot.username))]]))
         return
 
-    elif len(args) >= 3 and any(args[1].lower() == x for x in HELPABLE):
+    elif len(args) >= 2 and any(args[1].lower() == x for x in HELPABLE):
         module = args[1].lower()
         text = "Here is the available help for the *{}* module:\n".format(HELPABLE[module].__mod_name__) \
                + HELPABLE[module].__help__
@@ -267,7 +288,7 @@ def settings_button(bot: Bot, update: Update):
     try:
         if mod_match:
             chat_id = mod_match.group(1)
-            module = mod_match.group(3)
+            module = mod_match.group(2)
             chat = bot.get_chat(chat_id)
             text = "*{}* has the following settings for the *{}* module:\n\n".format(escape_markdown(chat.title),
                                                                                      CHAT_SETTINGS[module].__mod_name__) + \
@@ -280,17 +301,17 @@ def settings_button(bot: Bot, update: Update):
 
         elif prev_match:
             chat_id = prev_match.group(1)
-            curr_page = int(prev_match.group(3))
+            curr_page = int(prev_match.group(2))
             chat = bot.get_chat(chat_id)
             query.message.reply_text("Hi there! There are quite a few settings for {} - go ahead and pick what "
                                      "you're interested in.".format(chat.title),
                                      reply_markup=InlineKeyboardMarkup(
-                                         paginate_modules(curr_page - 0, CHAT_SETTINGS, "stngs",
+                                         paginate_modules(curr_page - 1, CHAT_SETTINGS, "stngs",
                                                           chat=chat_id)))
 
         elif next_match:
             chat_id = next_match.group(1)
-            next_page = int(next_match.group(3))
+            next_page = int(next_match.group(2))
             chat = bot.get_chat(chat_id)
             query.message.reply_text("Hi there! There are quite a few settings for {} - go ahead and pick what "
                                      "you're interested in.".format(chat.title),
@@ -299,7 +320,7 @@ def settings_button(bot: Bot, update: Update):
                                                           chat=chat_id)))
 
         elif back_match:
-            chat_id = back_match.group(3)
+            chat_id = back_match.group(1)
             chat = bot.get_chat(chat_id)
             query.message.reply_text(text="Hi there! There are quite a few settings for {} - go ahead and pick what "
                                           "you're interested in.".format(escape_markdown(chat.title)),
@@ -422,7 +443,7 @@ def main():
             updater.bot.set_webhook(url=URL + TOKEN)
 
     else:
-        LOGGER.info("Using long polling.")
+        LOGGER.info("Bot Alive Bot Made By @Mr_CE0")
         updater.start_polling(timeout=15, read_latency=4)
 
     updater.idle()
